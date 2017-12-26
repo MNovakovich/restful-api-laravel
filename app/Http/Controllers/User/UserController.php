@@ -29,7 +29,7 @@ class UserController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(UsersRequest $request)
     {
        $user = new User;
 
@@ -42,7 +42,7 @@ class UserController extends Controller
 
        $user->save();
 
-       return response()->json(['data'=>$user],201);
+       return response()->json(['data'=>$user],201 );
     }
 
     
@@ -73,7 +73,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $user = User::findOrFail($id);
+
+
     }
 
     /**
