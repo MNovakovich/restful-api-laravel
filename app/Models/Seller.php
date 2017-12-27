@@ -9,6 +9,6 @@ class Seller extends User
 {
     public function products()
     {
-    	return hasMany(Product::class);
+    	return $this->hasMany(Product::class);
     }
 }

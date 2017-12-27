@@ -3,7 +3,9 @@
 namespace App\Models;
 
 //use Illuminate\Database\Eloquent\Model;
-use App\Transaction\Transaction;
+use App\Models\Transaction;
+use App\User;
+
 class Buyer extends User
 {
     public function transactions()

@@ -31,11 +31,16 @@ class User extends Authenticatable
         'admin'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+
+    public function setNameAttribute($name)
+    {
+        $this->attributes['name'] = strtoupper($name);
+    }
+
+    public function getNameAttribute($name)
+    {
+        return strtoupper($name);
+    }
     protected $hidden = [
         'password', 
         'remember_token',

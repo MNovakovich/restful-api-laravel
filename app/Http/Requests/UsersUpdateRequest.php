@@ -14,7 +14,7 @@ class UsersUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +25,7 @@ class UsersUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-           'name'=>'string',
+        
            'email'=>'email|unique:users',
            'password'=>'min:5|confirmed',
            'admin'=>'in:'.User::ADMIN_USER. ', '.User::REGULAR_USER
