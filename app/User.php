@@ -7,9 +7,12 @@ use App\User;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+//class for table deleted_at , ($table->softDeletes - in migration file);
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
     
     const VERIFIED_USER ='1';
     const UNVERIFIED_USER = '0';
@@ -28,7 +31,8 @@ class User extends Authenticatable
         'password',
         'verified',
         'verification_token',
-        'admin'
+        'admin',
+        'deleted_at'
     ];
 
 
@@ -49,6 +53,7 @@ class User extends Authenticatable
 
     public function isVerified()
     {
+        //return static::where('verified',User::VERIFIED_USER);
         return $this->verified == User::VERIFIED_USER;
     }
 
@@ -60,5 +65,7 @@ class User extends Authenticatable
     public static function generateVerificationCode(){
         return str_random(40);
     }
+
+    
 }
 

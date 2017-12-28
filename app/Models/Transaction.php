@@ -6,12 +6,17 @@ use App\Models\Buyer;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Transaction extends Model
 {
+    use SoftDeletes;
+
     protected $fillable =[
        'quantity',
        'buyer_id',
-       'product_id'
+       'product_id',
+       'deleted_at'
     ];
 
     public function buyer()

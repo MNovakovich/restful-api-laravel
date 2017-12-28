@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class CategoryController extends Controller
+use App\Http\Controllers\ApiController;
+use App\Models\Category;
+
+class CategoryController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -14,39 +17,33 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $category =  Category::all();
+    
+         // return response()->json(['data'=>$category,'code'=>200],200);
+
+        return $this->showAll($category);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
-        //
+        
+        $newCategory =  new Category;
+
+        $newCategory->name = $request->input('name');
+        $newCategory->description = $request->input('description');
+        $newCategory->save();
+
+        return response()->json(['data'=>$newCategory],201 );
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
-        //
+        $category =  Category::findOrFail($id);
+
+        return response()->json(['data'=>$category,'code'=>200],200);
     }
 
     /**
@@ -55,31 +52,30 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(Request $request, $id)
     {
-        //
+        
+        $category =  Category::findOrFail($id);
+
+        $category->name =  $request->input('name');
+        $category->description =  $request->input('description');
+        if ($category->isClean())
+         {
+             return response()->json(['error'=>'You need to specify and different value','code'=>422],422);
+         }
+         $category->save();
+
+         return response()->json(['data'=>$category,'code'=>200],200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id);
+
+        $category->delete();
+
+        return response()->json(['data'=>$category ],200);
     }
 }

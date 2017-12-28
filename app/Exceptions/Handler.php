@@ -5,8 +5,10 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+
 class Handler extends ExceptionHandler
 {
+     
     /**
      * A list of the exception types that are not reported.
      *
@@ -35,7 +37,10 @@ class Handler extends ExceptionHandler
      * @return void
      */
     public function report(Exception $exception)
-    {
+    {    
+       /*if ($exception instanceof ModelNotFoundException) {
+            return response()->json('nemoze to prika',404);
+        }*/
         parent::report($exception);
     }
 
@@ -48,6 +53,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+       
+        if ($exception instanceof ModelNotFoundException) {
+            return response()->json('nemoze to prika',404);
+        }
+        // print_r($exceptions);
         return parent::render($request, $exception);
     }
+    
+ 
 }

@@ -5,21 +5,22 @@ namespace App\Http\Controllers\Buyer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Http\Controllers\ApiController;
+
 use App\Models\Buyer;
 use App\User;
 
-class BuyerController extends Controller
+class BuyerController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $buyers = Buyer::has('transactions')->get();
 
-        return $this->showAll($buyers);
+        return response()->json(['data'=>$buyers],200);
+
+        // we created interface class ApiResponser 
+        //return $this->showAll($buyers);
     }
 
    
@@ -27,7 +28,9 @@ class BuyerController extends Controller
     {
         $buyer =  Buyer::has('transactions')->findOrFail($id);
      
-        return response()->json(['data'=>$buyer],200);
+        // return response()->json(['data'=>$buyer],200);
+
+        return $this->showOne($buyer, 200);
     }
 
     

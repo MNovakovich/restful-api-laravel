@@ -4,15 +4,24 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+// we create abstarct class ApiController
+use App\Http\Controllers\ApiController;
+
 use App\User;
-class UserController extends Controller
+
+class UserController extends ApiController
 {
  
     public function index()
     {
+
         $users = User::all();
+       
+       
   // dd($users);
-      return response()->json(['data'=>$users],200);
+       return response()->json(['data'=>$users],200);
+      //return $this->showAll($users, 200)
     }
 
     public function store(UsersRequest $request)
@@ -28,15 +37,21 @@ class UserController extends Controller
 
        $user->save();
 
+       //first way how we can do it
        return response()->json(['data'=>$user],201 );
+
+       //second way
+
+      // return $this->showOne($user, 201);
     }
 
     
-    public function show($id)
+    public function show(User $user)
     {
-        $user = User::findOrFail($id);
-
-        return response()->json(['data'=>$user]);
+       // $user = User::findOrFail($id);   // ako dodajemo parametar User , umesto $id, ne treba nam ovaj deo koda
+       
+         return response()->json(['data'=>$user]);
+       // return $this->showOne($user);
     }
 
  
@@ -65,9 +80,10 @@ class UserController extends Controller
          // proveriti zasto mi ne prikazujee pooruku za ovaj uslov:
          if($request->has('admin'))
          {
-            if (!$user->isVerivied()) 
+            if (!$user->isVerified()) 
             {
-                 return response()->json(['error'=>'Only verified users can modify the admin field','code' => 409],409);
+                 //return response()->json(['error'=>'Only verified users can modify the admin field','code' => 409],409);
+                 return $this->errorResponse('Only verified users can modify the admin field',409);
             }
             $user->admin = $request->admin;
          }
