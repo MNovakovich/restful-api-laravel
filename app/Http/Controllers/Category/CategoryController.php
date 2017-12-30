@@ -46,13 +46,7 @@ class CategoryController extends ApiController
         return response()->json(['data'=>$category,'code'=>200],200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-   
+    
     public function update(Request $request, $id)
     {
         

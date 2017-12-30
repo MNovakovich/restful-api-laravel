@@ -25,6 +25,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $table ="users";
+
+    protected $dates = ['deleted_at'];
     protected $fillable = [
         'name', 
         'email', 
@@ -35,7 +37,7 @@ class User extends Authenticatable
         'deleted_at'
     ];
 
-
+     // Mutators (geter and setter )
     public function setNameAttribute($name)
     {
         $this->attributes['name'] = strtoupper($name);
