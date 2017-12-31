@@ -33,11 +33,15 @@ Route::resource('category.transactions','Category\CategoryTransactionController'
 * Product
 */
 Route::resource('products','Product\ProductController', ['only'=>['index','show']]);
+Route::resource('product.categories','Product\ProductCategoryController', ['only'=>['index','update','destroy']]);
 
 /**
 * Seller
 */
 Route::resource('sellers','Seller\SellerController', ['only'=>['index','show']]);
+Route::resource('seller.transactions','Seller\SellerTransactionController', ['only'=>'index']);
+Route::resource('seller.buyers','Seller\SellerBuyerController', ['only'=>'index']);
+Route::resource('seller.products','Seller\SellerProductController', ['except'=>['create','show']]);
 
 /**
 * Transaction
@@ -49,3 +53,7 @@ Route::resource('transactions.seller','Transaction\TransactionSellerController',
 * User
 */
 Route::resource('users','User\UserController', ['except'=>['create','edit']]);
+
+/**
+*  
+**/
